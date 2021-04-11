@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+
+<head>
+	<title>Chat App - welcome</title>
+	<script type="text/javascript" src="/js/chat.js"></script>
+</head>
+
+<body>
+	<h1>Join a Channel</h1>
+	<hr /><br />
+	
+	<div th:if="${!channels.isEmpty()}" th:each="channel : ${channels}">
+		<span><a th:href="@{'/channels/' + ${channel.Id}}" th:text="${channel.channelName}">DummyChannel</a></span>
+	</div>
+
+</body>
+
+</html>
