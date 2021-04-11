@@ -1,5 +1,7 @@
 package com.coderscampus.olaf.assignment14.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +15,7 @@ import com.coderscampus.olaf.assignment14.service.ChannelService;
 @RestController
 @RequestMapping("/channels")
 public class ChannelController {
-	
+
 	@Autowired
 	ChannelService channelService;
 
@@ -21,10 +23,15 @@ public class ChannelController {
 	public Channel getMessages(@RequestBody Channel channelId) {
 		return channelService.allMessages(channelId);
 	}
-	
+
 	@PostMapping("/postMessage")
-	public void postMessage (@RequestBody ChatMessage message) {
+	public void postMessage(@RequestBody ChatMessage message) {
 		channelService.saveMessageToChannel(message);
 	}
-			
+
+	@PostMapping("/addChannel")
+	public List<Channel> postChannel(@RequestBody Channel channel) {
+		return channelService.addChannel(channel);
+	}
+
 }

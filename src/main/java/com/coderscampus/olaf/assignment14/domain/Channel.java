@@ -46,7 +46,5 @@ public class Channel {
 	public String toString() {
 		return "Channel [id=" + id + ", channelName=" + channelName + ", messages=" + messages + "]";
 	}
-	
-	
 
 }

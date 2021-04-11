@@ -19,7 +19,7 @@ import org.springframework.ui.ModelMap;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private ChannelService channelService;
 	@Autowired
@@ -31,16 +31,14 @@ public class UserController {
 		model.put("channels", channels);
 		return "welcome";
 	}
-	
+
 	@GetMapping("/channels/{channelId}")
 	public String getChannel(ModelMap model, @PathVariable Long channelId) {
 		Channel channel = channelService.findById(channelId);
-		User user = userService.findLatestUser();
 		model.put("channel", channel);
-		model.put("user", user);
 		return "channel";
 	}
-	
+
 	@PostMapping("/users/createUser")
 	@ResponseBody
 	public User createUser(@RequestBody User user) {

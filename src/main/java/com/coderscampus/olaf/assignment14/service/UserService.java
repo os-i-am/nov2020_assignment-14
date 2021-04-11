@@ -8,20 +8,16 @@ import com.coderscampus.olaf.assignment14.repository.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	UserRepository userRepo;
-	
+
 	private Long userId = 0L;
 
 	public User createUser(User user) {
 		user.setId(userId++);
 		return userRepo.createUser(user);
-		
-	}
 
-	public User findLatestUser() {
-		return userRepo.findLatestUser();
 	}
 
 }

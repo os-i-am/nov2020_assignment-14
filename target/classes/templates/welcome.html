@@ -3,16 +3,26 @@
 
 <head>
 	<title>Chat App - welcome</title>
-	<script type="text/javascript" src="/js/chat.js"></script>
 </head>
 
 <body>
 	<h1>Join a Channel</h1>
 	<hr /><br />
-	
-	<div th:if="${!channels.isEmpty()}" th:each="channel : ${channels}">
-		<span><a th:href="@{'/channels/' + ${channel.Id}}" th:text="${channel.channelName}">DummyChannel</a></span>
+
+	<span id="channels">
+		<div th:if="${!channels.isEmpty()}" th:each="channel : ${channels}">
+			<span><a th:href="@{'/channels/' + ${channel.Id}}" th:text="${channel.channelName}">DummyChannel</a></span>
+		</div>
+	</span>
+
+	<br />
+	<div>
+		<input type="text" id="addChannel" placeholder="Enter new channel" />
 	</div>
+	<div>
+		<input type="button" value="add channel" id="addChannelBtn" />
+		<div>
+			<script type="text/javascript" src="/js/chat.js"></script>
 
 </body>
 

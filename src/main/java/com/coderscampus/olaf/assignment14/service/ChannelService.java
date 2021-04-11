@@ -16,7 +16,7 @@ public class ChannelService {
 	private ChannelRepository channelRepo;
 
 	public List<Channel> getAllChannels() {
-		
+
 		return channelRepo.getAllChannels();
 	}
 
@@ -27,12 +27,17 @@ public class ChannelService {
 	public void saveMessageToChannel(ChatMessage message) {
 		Channel currentChannel = findById(message.getChannelId());
 		channelRepo.saveMessageToChannel(currentChannel, message);
-		
+
 	}
 
 	public Channel allMessages(Channel channelId) {
 		Long id = channelId.getId();
 		return findById(id);
+	}
+
+	public List<Channel> addChannel(Channel channel) {
+		return channelRepo.addChannel(channel);
+
 	}
 
 }

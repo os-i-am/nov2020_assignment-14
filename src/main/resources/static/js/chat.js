@@ -1,36 +1,62 @@
-if (sessionStorage.getItem('userId') === null) {
+if (sessionStorage.getItem('username') === null) {
 	console.log(`This is a new User!`)
 	createUser()
 }
 
 function createUser() {
-	
+
 	if (/channels/.test(window.location.href)) {
-			window.location.replace("/welcome");
+		window.location.replace("/welcome");
 	}
-	
+
 	var username = prompt(`What's your name?`)
-	
+
 	if (username == '' || username == null) {
 		alert(`please enter a name!`)
 		createUser()
-	} else {		
+	} else {
 		var user = {
 			"username": username
 		}
-		
-		fetch(`/users/createUser`,{
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(user)
-	})
-		.then((response) => response.json())
-		.then((data) => {
-			sessionStorage.setItem('userId', data.id)
+
+		fetch(`/users/createUser`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(user)
 		})
+			.then((response) => response.json())
+			.then((data) => {
+				sessionStorage.setItem('username', data.username)
+			})
 	}
+}
+
+if (document.querySelector("#addChannelBtn")) {
+	var addChannelBtn = document.querySelector("#addChannelBtn")
+	addChannelBtn.addEventListener("click", () => {
+		var channel = {
+			"channelName": document.querySelector("#addChannel").value
+		}
+		fetch(`/channels/addChannel`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(channel)
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data)
+				var channels = document.querySelector("#channels")
+				channels.innerHTML = ''
+				data.forEach(aChannel => {
+					channels.innerHTML += '<a href="/channels/' + aChannel.id + '">' + aChannel.channelName + '</a>' + '<br />'
+					document.querySelector("#addChannel").value = ''
+				})
+			})
+	})
 }
 
 if (document.querySelector("#chatbox")) {
@@ -40,32 +66,31 @@ if (document.querySelector("#chatbox")) {
 		if (press.key === 'Enter' && chatbox.value != '') {
 			press.preventDefault()
 			var channelId = document.querySelector("#channelId")
-			var username = document.querySelector("#username")
 			var chatMessage = {
 				"channelId": channelId.value,
-				"username": username.value,
+				"username": sessionStorage.getItem('username'),
 				"message": chatbox.value
-		}
-		
-		fetch(`/channels/postMessage`,{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(chatMessage)
-		})
-		chatbox.value = ''
+			}
+
+			fetch(`/channels/postMessage`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(chatMessage)
+			})
+			chatbox.value = ''
 		}
 	})
 
 	var chatContent = setInterval(getMessages, 500)
 
 	function getMessages() {
-		var channelId = document.querySelector("#channelId")	
+		var channelId = document.querySelector("#channelId")
 		var channel = {
-				"id": channelId.value
-			}
-		fetch(`/channels/allMessages`,{
+			"id": channelId.value
+		}
+		fetch(`/channels/allMessages`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -81,8 +106,8 @@ if (document.querySelector("#chatbox")) {
 					chat.innerHTML = 'not much going on here yet.. chat away dude!'
 				}
 				data.messages.forEach(aMessage => {
-	  			chat.innerHTML += '<b>' + aMessage.username + ': ' + '</b>' + aMessage.message + '<br />'
-				})			
+					chat.innerHTML += '<b>' + aMessage.username + ': ' + '</b>' + aMessage.message + '<br />'
+				})
 			})
 	}
 }

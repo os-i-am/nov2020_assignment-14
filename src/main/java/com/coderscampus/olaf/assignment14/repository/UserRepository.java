@@ -16,12 +16,7 @@ public class UserRepository {
 		users.add(user);
 		System.out.println(user);
 		return user;
-		
+
 	}
 
-	public User findLatestUser() {
-		if (users.size() > 0) 
-			return users.get(users.size() - 1);
-		else return null;
-	}
 }
