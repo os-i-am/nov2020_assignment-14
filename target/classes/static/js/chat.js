@@ -33,7 +33,7 @@ function createUser() {
 	}
 }
 
-if (document.querySelector("#addChannelBtn")) {
+if (/welcome/.test(window.location.href)) {
 	
 	var addChannelBtn = document.querySelector("#addChannelBtn")
 	var addChannelInput = document.querySelector("#addChannelInput")
@@ -71,7 +71,7 @@ if (document.querySelector("#addChannelBtn")) {
 	}
 }
 
-if (document.querySelector("#chatbox")) {
+if (/channels/.test(window.location.href)) {
 
 	var chatbox = document.querySelector("#chatbox")
 	var userTag = document.querySelector("#user-tag")
