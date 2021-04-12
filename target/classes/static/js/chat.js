@@ -72,6 +72,7 @@ if (document.querySelector("#addChannelBtn")) {
 }
 
 if (document.querySelector("#chatbox")) {
+
 	var chatbox = document.querySelector("#chatbox")
 	var userTag = document.querySelector("#user-tag")
 	

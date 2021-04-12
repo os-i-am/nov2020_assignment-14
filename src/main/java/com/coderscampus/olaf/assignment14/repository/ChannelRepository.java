@@ -26,6 +26,8 @@ public class ChannelRepository {
 	}
 
 	public Channel findById(Long channelId) {
+		if (channels.isEmpty())
+			initializeGeneralChannel();
 		for (Channel channel : channels) {
 			if (channel.getId().equals(channelId))
 				return channel;
