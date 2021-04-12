@@ -26,13 +26,13 @@ public class ChannelRepository {
 	}
 
 	public Channel findById(Long channelId) {
-		if (channels.isEmpty())
-			initializeGeneralChannel();
 		for (Channel channel : channels) {
 			if (channel.getId().equals(channelId))
 				return channel;
 		}
-		return null;
+		if (channels.isEmpty())
+			return (initializeGeneralChannel().get(0));					
+		else return channels.get(0);
 	}
 
 	public void saveMessageToChannel(Channel currentChannel, ChatMessage message) {
