@@ -34,10 +34,22 @@ function createUser() {
 }
 
 if (document.querySelector("#addChannelBtn")) {
+	
 	var addChannelBtn = document.querySelector("#addChannelBtn")
-	addChannelBtn.addEventListener("click", () => {
+	var addChannelInput = document.querySelector("#addChannelInput")
+	
+	addChannelInput.addEventListener('keypress', (press) => {
+		if (press.key === 'Enter' && addChannelInput.value != '') {
+			console.log('enter')
+			addChannel()}
+		})
+	addChannelBtn.addEventListener('click', () => {
+		if (addChannelInput.value != '') addChannel()
+	})
+		
+	function addChannel(){	
 		var channel = {
-			"channelName": document.querySelector("#addChannel").value
+			"channelName": document.querySelector("#addChannelInput").value
 		}
 		fetch(`/channels/addChannel`, {
 			method: "POST",
@@ -53,14 +65,17 @@ if (document.querySelector("#addChannelBtn")) {
 				channels.innerHTML = ''
 				data.forEach(aChannel => {
 					channels.innerHTML += '<a href="/channels/' + aChannel.id + '">' + aChannel.channelName + '</a>' + '<br />'
-					document.querySelector("#addChannel").value = ''
+					document.querySelector("#addChannelInput").value = ''
 				})
 			})
-	})
+	}
 }
 
 if (document.querySelector("#chatbox")) {
 	var chatbox = document.querySelector("#chatbox")
+	var userTag = document.querySelector("#user-tag")
+	
+	userTag.innerHTML = 'logged in as: <b>' + sessionStorage.getItem('username') +'</b>'	
 
 	chatbox.addEventListener('keypress', (press) => {
 		if (press.key === 'Enter' && chatbox.value != '') {
